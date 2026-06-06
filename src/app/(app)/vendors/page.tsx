@@ -22,7 +22,7 @@ export default async function VendorsPage({
 }: {
   searchParams: Promise<{ q?: string; status?: string; category?: string }>
 }) {
-  await requireRole(STAFF_ROLES)
+  const profile = await requireRole(STAFF_ROLES)
   const sp = await searchParams
   const supabase = await createClient()
 
@@ -36,9 +36,11 @@ export default async function VendorsPage({
   return (
     <div className="space-y-6">
       <PageHeader title="Vendors" description="Register and manage your supplier records.">
-        <Link href="/vendors/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
-          <Plus className="h-4 w-4" /> Add vendor
-        </Link>
+        {profile.role === 'admin' && (
+          <Link href="/vendors/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
+            <Plus className="h-4 w-4" /> Add vendor
+          </Link>
+        )}
       </PageHeader>
 
       <Card>
@@ -75,9 +77,11 @@ export default async function VendorsPage({
             title="No vendors found"
             description="Try adjusting filters, or register your first vendor."
             action={
-              <Link href="/vendors/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
-                <Plus className="h-4 w-4" /> Add vendor
-              </Link>
+              profile.role === 'admin' ? (
+                <Link href="/vendors/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
+                  <Plus className="h-4 w-4" /> Add vendor
+                </Link>
+              ) : undefined
             }
           />
         ) : (

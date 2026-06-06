@@ -79,12 +79,16 @@ export default async function DashboardPage() {
             <p className="mt-1 text-sm text-slate-500">Here&apos;s what&apos;s happening across procurement.</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link href="/vendors/new" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
-              <Building2 className="h-4 w-4" /> Add vendor
-            </Link>
-            <Link href="/rfqs/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
-              <Plus className="h-4 w-4" /> New RFQ
-            </Link>
+            {profile.role === 'admin' && (
+              <Link href="/vendors/new" className={buttonVariants({ variant: 'outline', size: 'sm' })}>
+                <Building2 className="h-4 w-4" /> Add vendor
+              </Link>
+            )}
+            {(profile.role === 'admin' || profile.role === 'procurement_officer') && (
+              <Link href="/rfqs/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
+                <Plus className="h-4 w-4" /> New RFQ
+              </Link>
+            )}
           </div>
         </div>
 

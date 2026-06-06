@@ -39,7 +39,7 @@ export default async function VendorDetailPage({
     .order('created_at', { ascending: false })
     .limit(6)
 
-  const canManage = profile.role === 'admin' || profile.role === 'procurement_officer'
+  const canManage = profile.role === 'admin'
   const canDelete = profile.role === 'admin'
 
   return (

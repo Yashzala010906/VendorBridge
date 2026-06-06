@@ -19,7 +19,7 @@ export default async function ApprovalsPage({
 }: {
   searchParams: Promise<{ status?: string }>
 }) {
-  await requireRole(STAFF_ROLES)
+  await requireRole(['admin', 'manager'])
   const sp = await searchParams
   const supabase = await createClient()
 

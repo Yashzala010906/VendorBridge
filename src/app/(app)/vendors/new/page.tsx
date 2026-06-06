@@ -8,7 +8,7 @@ import { createVendor } from '@/lib/actions/vendors'
 export const metadata = { title: 'New vendor — VendorBridge' }
 
 export default async function NewVendorPage() {
-  await requireRole(['admin', 'procurement_officer'])
+  await requireRole(['admin'])
 
   return (
     <div className="mx-auto max-w-3xl space-y-5">

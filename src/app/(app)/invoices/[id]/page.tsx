@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Printer, Download, IndianRupee, PackageCheck } from 'lucide-react'
-import { getCurrentProfile } from '@/lib/auth/dal'
+import { getCurrentProfile, requireRole } from '@/lib/auth/dal'
 import { createClient } from '@/lib/supabase/server'
 import { Alert } from '@/components/ui/alert'
 import { buttonVariants } from '@/components/ui/button'
@@ -20,7 +20,7 @@ export default async function InvoiceDetailPage({
 }) {
   const { id } = await params
   const { sent, error } = await searchParams
-  const profile = (await getCurrentProfile())!
+  const profile = await requireRole(['admin', 'procurement_officer', 'manager'])
   const canManage = profile.role === 'admin' || profile.role === 'procurement_officer'
   const supabase = await createClient()
 
@@ -69,11 +69,14 @@ export default async function InvoiceDetailPage({
 
       {sent && (
         <Alert tone="success" className="no-print">
-          Invoice emailed to {inv.sent_to ?? 'the vendor'}{sent === 'mock' ? ' (mock provider — no real email sent).' : '.'}
+          Invoice emailed to {inv.sent_to ?? 'the vendor'}.
         </Alert>
       )}
       {error === 'noemail' && (
         <Alert tone="error" className="no-print">This vendor has no email on file. Add one or enter a recipient.</Alert>
+      )}
+      {error === 'failed_send' && (
+        <Alert tone="error" className="no-print">Failed to send email. Please verify your SMTP or Resend credentials in your environment variables.</Alert>
       )}
 
       <InvoiceDocument invoice={inv} />

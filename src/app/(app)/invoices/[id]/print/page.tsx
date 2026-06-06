@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
-import { requireUser } from '@/lib/auth/dal'
+import { requireRole } from '@/lib/auth/dal'
 import { createClient } from '@/lib/supabase/server'
 import { InvoiceDocument } from '@/components/invoices/invoice-document'
 import { PrintButton, AutoPrint } from '@/components/invoices/print-controls'
@@ -15,7 +15,7 @@ export default async function InvoicePrintPage({
   params: Promise<{ id: string }>
   searchParams: Promise<{ auto?: string }>
 }) {
-  await requireUser()
+  await requireRole(['admin', 'procurement_officer', 'manager'])
   const { id } = await params
   const { auto } = await searchParams
   const supabase = await createClient()

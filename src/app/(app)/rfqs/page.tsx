@@ -40,7 +40,7 @@ export default async function RfqsPage({
         title="Requests for Quotation"
         description={staff ? 'Create and manage your procurement requests.' : 'RFQs you have been invited to quote on.'}
       >
-        {staff && (
+        {(profile.role === 'admin' || profile.role === 'procurement_officer') && (
           <Link href="/rfqs/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
             <Plus className="h-4 w-4" /> New RFQ
           </Link>
@@ -69,7 +69,7 @@ export default async function RfqsPage({
             title={staff ? 'No RFQs yet' : 'No invitations yet'}
             description={staff ? 'Create your first request for quotation.' : 'When officers invite you to quote, RFQs appear here.'}
             action={
-              staff ? (
+              (profile.role === 'admin' || profile.role === 'procurement_officer') ? (
                 <Link href="/rfqs/new" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
                   <Plus className="h-4 w-4" /> New RFQ
                 </Link>

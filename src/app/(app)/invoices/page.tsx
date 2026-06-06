@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Receipt } from 'lucide-react'
-import { getCurrentProfile, isStaff } from '@/lib/auth/dal'
+import { getCurrentProfile, isStaff, requireRole } from '@/lib/auth/dal'
 import { createClient } from '@/lib/supabase/server'
 import { INVOICE_STATUS } from '@/lib/constants'
 import { PageHeader } from '@/components/ui/page-header'
@@ -19,7 +19,7 @@ export default async function InvoicesPage({
 }: {
   searchParams: Promise<{ status?: string }>
 }) {
-  const profile = (await getCurrentProfile())!
+  const profile = await requireRole(['admin', 'procurement_officer', 'manager'])
   const sp = await searchParams
   const staff = isStaff(profile.role)
   const supabase = await createClient()

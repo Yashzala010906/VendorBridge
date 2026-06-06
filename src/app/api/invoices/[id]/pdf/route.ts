@@ -1,12 +1,17 @@
 import { renderToBuffer } from '@react-pdf/renderer'
 import { createClient } from '@/lib/supabase/server'
 import { buildInvoiceDoc } from '@/lib/pdf/invoice-pdf'
+import { getCurrentProfile } from '@/lib/auth/dal'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  const profile = await getCurrentProfile()
+  if (!profile || (profile.role !== 'admin' && profile.role !== 'procurement_officer' && profile.role !== 'manager')) {
+    return new Response('Forbidden', { status: 403 })
+  }
   const supabase = await createClient()
 
   const { data: invoice } = await supabase

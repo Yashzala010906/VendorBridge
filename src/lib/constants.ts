@@ -83,11 +83,11 @@ export const NAV_ITEMS: NavItem[] = [
   { href: '/vendors', label: 'Vendors', icon: Building2, roles: ['admin', 'procurement_officer', 'manager'] },
   { href: '/rfqs', label: 'RFQs', icon: FileText, roles: ['admin', 'procurement_officer', 'manager', 'vendor'] },
   { href: '/quotations', label: 'Quotations', icon: ReceiptText, roles: ['admin', 'procurement_officer', 'manager', 'vendor'] },
-  { href: '/approvals', label: 'Approvals', icon: ClipboardCheck, roles: ['admin', 'procurement_officer', 'manager'] },
+  { href: '/approvals', label: 'Approvals', icon: ClipboardCheck, roles: ['admin', 'manager'] },
   { href: '/purchase-orders', label: 'Purchase Orders', icon: PackageCheck, roles: ['admin', 'procurement_officer', 'manager', 'vendor'] },
-  { href: '/invoices', label: 'Invoices', icon: Receipt, roles: ['admin', 'procurement_officer', 'manager', 'vendor'] },
+  { href: '/invoices', label: 'Invoices', icon: Receipt, roles: ['admin', 'procurement_officer', 'manager'] },
   { href: '/activity', label: 'Activity', icon: Activity, roles: ['admin', 'procurement_officer', 'manager', 'vendor'] },
-  { href: '/reports', label: 'Reports', icon: BarChart3, roles: ['admin', 'procurement_officer', 'manager'] },
+  { href: '/reports', label: 'Reports', icon: BarChart3, roles: ['admin'] },
   { href: '/users', label: 'Users', icon: Users, roles: ['admin'] },
 ]
 

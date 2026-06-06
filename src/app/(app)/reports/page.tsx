@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { requireUser } from '@/lib/auth/dal'
+import { requireRole } from '@/lib/auth/dal'
 import { PageHeader } from '@/components/ui/page-header'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { StatCard } from '@/components/ui/stat-card'
@@ -11,7 +11,7 @@ import { DollarSign, TrendingUp, ShoppingCart, FileText, Building2 } from 'lucid
 export const metadata = { title: 'Reports & Analytics — VendorBridge' }
 
 export default async function ReportsPage() {
-  await requireUser()
+  await requireRole(['admin'])
   const supabase = await createClient()
 
   // Fetch all core data in parallel
